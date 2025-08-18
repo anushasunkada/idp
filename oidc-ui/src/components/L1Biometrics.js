@@ -233,6 +233,7 @@ export default function L1Biometrics({
    * @returns first errorCode with error info, or null errorCode for no error
    */
   const validateBiometricResponse = (response) => {
+  console.log("validate Capture Response: ", response);
     if (
       response === null ||
       response["biometrics"] === null ||

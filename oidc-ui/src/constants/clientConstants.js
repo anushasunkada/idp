@@ -10,6 +10,7 @@ const challengeTypes = {
   otp: "OTP",
   wallet: "WALLET",
   pwd: "PWD",
+  fac: "FAC",
 };
 
 const challengeFormats = {
@@ -26,7 +27,8 @@ const validAuthFactors = {
   BIO: "BIO",
   PWD: "PWD",
   WLA: "WLA",
-  KBI: "KBI"
+  KBI: "KBI",
+  FAC: "FAC"
 };
 
 const buttonTypes = {
@@ -107,7 +109,8 @@ const modalityIconPath = {
   WALLET: "images/wallet_icon.svg",
   BIO: "images/bio_icon.svg",
   PWD: "images/pwd_icon.svg",
-  KBI: "images/kbi_icon.svg"
+  KBI: "images/kbi_icon.svg",
+  FAC: "images/bio_icon.svg"
 };
 
 const errorCodeObj = {

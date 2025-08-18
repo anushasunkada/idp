@@ -12,6 +12,8 @@ import {
   CLAIM_DETAILS,
   PREPARE_SIGNUP_REDIRECT,
   RESUME,
+  BIO_TOKEN_GENERATE,
+  BIO_STATUS,
 } from "./../constants/routes";
 
 const authorizeQueryParam = "authorize_query_param";
@@ -301,6 +303,59 @@ class authService {
 
     return response.data;
   };
+
+
+  /**
+     * Triggers /bio-authorization/token API on Esignet service
+     * @param {string} transactionId same as Esignet transactionId
+     * @returns /bio-authorization/token API response
+     */
+    post_GenerateBioToken = async (transactionId) => {
+      let request = {
+        requestTime: new Date().toISOString(),
+        request: {
+          transactionId: transactionId,
+        },
+      };
+
+      let response = await ApiService.post(BIO_TOKEN_GENERATE, request, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-XSRF-TOKEN": getCookie("XSRF-TOKEN"),
+          "oauth-details-hash":
+            await this.openIDConnectService.getOauthDetailsHash(),
+          "oauth-details-key": await this.openIDConnectService.getTransactionId(),
+        },
+      });
+      return response.data;
+    };
+
+    /**
+     * Triggers /bio-authorization/status API on Esignet service
+     * @param {string} transactionId same as Esignet transactionId
+     * @param {string} linkCode generated Esignet linkcode
+     * @returns /bio-authorization/status API response
+     */
+    post_BioStatus = async (transactionId, token) => {
+      let request = {
+        requestTime: new Date().toISOString(),
+        request: {
+          transactionId: transactionId,
+          token: token
+        },
+      };
+
+      let response = await ApiService.post(BIO_STATUS, request, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-XSRF-TOKEN": getCookie("XSRF-TOKEN"),
+          "oauth-details-hash":
+            await this.openIDConnectService.getOauthDetailsHash(),
+          "oauth-details-key": await this.openIDConnectService.getTransactionId(),
+        },
+      });
+      return response.data;
+    };
 }
 
 export default authService;

@@ -44,17 +44,6 @@ if [[ -n "$images_url_env" ]]; then
     echo "unzip image completed."
 fi
 
-#sign-in-button-plugin
-echo "unzip plugins.."
-cd $plugins_path/temp
-unzip -o sign-in-button-plugin.zip
-rm sign-in-button-plugin.zip
-#move the required js file
-mv $plugins_path/temp/sign-in-with-esignet/$plugins_format/index.js $plugins_path/sign-in-button-plugin.js
-# delete temp folder
-cd $plugins_path
-rm -r temp
-
 echo "Pre-requisites download completed."
 
 echo "Replacing public url placeholder with public url"

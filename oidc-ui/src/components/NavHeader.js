@@ -143,6 +143,7 @@ export default function NavHeader({ langOptions, i18nKeyPrefix = "header" }) {
             url: pollingUrl, // Set the polling URL dynamically
             interval: 10000, // Optional: Check every 5 seconds (default is 5000ms)
             timeout: 5000,  // Optional: Timeout after 3 seconds (default is 5000ms)
+            enabled: false, // Disable automatic polling
           }}
           render={({ online }) =>
             online && (

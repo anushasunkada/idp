@@ -12,6 +12,7 @@ import SignInOptions from "../components/SignInOptions";
 import { multipleIdKey, purposeTypeObj, validAuthFactors } from "../constants/clientConstants";
 import linkAuthService from "../services/linkAuthService";
 import LoginQRCode from "../components/LoginQRCode";
+import FaceQRCode from "../components/FaceQRCode";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Buffer } from "buffer";
 import openIDConnectService from "../services/openIDConnectService";
@@ -97,6 +98,16 @@ function InitiateLinkedWallet(authFactor, openIDConnectService, backButtonDiv, s
   });
 }
 
+function InitiateFaceAuth(authFactor, openIDConnectService, backButtonDiv, secondaryHeading) {
+  return React.createElement(FaceQRCode, {
+    walletDetail: authFactor,
+    openIDConnectService: openIDConnectService,
+    authService: new authService(openIDConnectService),
+    backButtonDiv: backButtonDiv,
+    secondaryHeading: secondaryHeading
+  });
+}
+
 function InitiateInvalidAuthFactor(errorMsg) {
   return React.createElement(() => <div>{errorMsg}</div>);
 }
@@ -133,6 +144,10 @@ function createDynamicLoginElements(authFactor, oidcService, backButtonDiv, seco
 
   if (authFactorType === validAuthFactors.WLA) {
     return InitiateLinkedWallet(authFactor, oidcService, backButtonDiv, secondaryHeading);
+  }
+
+  if (authFactorType === validAuthFactors.FAC) {
+    return InitiateFaceAuth(authFactor, oidcService, backButtonDiv, secondaryHeading);
   }
 
   // default element

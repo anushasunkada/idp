@@ -7,9 +7,9 @@ import "./i18n";
 import 'react-tooltip/dist/react-tooltip.css'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <React>
     <App />
-  </React.StrictMode>
+  </React>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,4 +1,4 @@
-FROM node:18-alpine as build_esignet_ui
+FROM node:18-alpine AS build_esignet_ui
 
 # Set a build-time environment variable (replace YOUR_ENV_VARIABLE_NAME with the desired variable name)
 ARG oidcUIPublicUrl
@@ -21,7 +21,9 @@ ENV DEFAULT_ID_PROVIDER_NAME=$defaultIdProviderName
 ENV PUBLIC_URL=_PUBLIC_URL_
 
 COPY package*.json ./
-RUN npm install --legacy-peer-deps
+COPY secure-biometric-interface-integrator-*.tgz ./
+
+RUN npm install
 #Copy the working directory
 COPY . ./
 RUN npm run build
@@ -91,6 +93,8 @@ RUN chmod +x configure_start.sh
 
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
+COPY ./sign-in-button-plugin.js ${plugins_path}/sign-in-button-plugin.js
+
 # copy build files to nginx html directory
 COPY --from=build_esignet_ui /build  ${work_dir}
 
@@ -99,8 +103,8 @@ RUN echo "DEFAULT_THEME=$DEFAULT_THEME" >> ${work_dir}/env.env \
     && echo "DEFAULT_WELLKNOWN=$DEFAULT_WELLKNOWN" >> ${work_dir}/env.env \
     && echo "DEFAULT_FEVICON=$DEFAULT_FEVICON" >> ${work_dir}/env.env env \
     && echo "DEFAULT_TITLE=$DEFAULT_TITLE" >> ${work_dir}/env.env \
-    && echo "DEFAULT_ID_PROVIDER_NAME=$DEFAULT_ID_PROVIDER_NAME" >> ${work_dir}/env.env \
-    && wget --no-check-certificate --no-cache --no-cookies https://raw.githubusercontent.com/mosip/artifactory-ref-impl/master/artifacts/src/mosip-plugins/sign-in-with-esignet/sign-in-with-esignet.zip -O ${plugins_path}/temp/sign-in-button-plugin.zip
+    && echo "DEFAULT_ID_PROVIDER_NAME=$DEFAULT_ID_PROVIDER_NAME" >> ${work_dir}/env.env
+
 
 RUN chown -R ${container_user}:${container_user} /home/${container_user}
 

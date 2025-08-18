@@ -10,11 +10,11 @@ export const PREPARE_SIGNUP_REDIRECT = "/authorization/prepare-signup-redirect";
 export const RESUME = "/authorization/complete-signup-redirect";
 
 // Config endpoint
-export const CONFIG = "/theme/config.json";
+export const CONFIG = process.env.PUBLIC_URL + "/theme/config.json";
 
 // Language endpoint
-export const DEFAULT_CONFIG = "/locales/default.json";
-export const ENG_CONFIG = "/locales/en.json";
+export const DEFAULT_CONFIG = process.env.PUBLIC_URL +  "/locales/default.json";
+export const ENG_CONFIG = process.env.PUBLIC_URL + "/locales/en.json";
 
 // Link authorization endpoint
 export const LINK_CODE_GENERATE = "/linked-authorization/link-code";
@@ -35,3 +35,7 @@ export const CONSENT = "/consent";
 export const ESIGNET_DETAIL = "/";
 export const CLAIM_DETAIL = "/claim-details";
 export const NETWORK_ERROR = "/network-error";
+
+// BIO authorization endpoint
+export const BIO_TOKEN_GENERATE = "/bio-authorization/token";
+export const BIO_STATUS = "/bio-authorization/status";
